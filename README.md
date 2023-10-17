@@ -1,4 +1,4 @@
-# ncurses-typp
+# typp
 This TUI is intended for the practice of typing text from the keyboard.<br/>
 You can compete with other users through the pivot table (TCP client-server).<br/>
 From the available random texts: <strong>English</strong> / <strong>Russian</strong>.<br/>
@@ -12,7 +12,7 @@ From the available random texts: <strong>English</strong> / <strong>Russian</str
 
 ## Cloning and check needed packages
 ```
-git clone https://github.com/iikrllx/ncurses-typp
+git clone https://github.com/iikrllx/typp
 cd typp && cat INSTALL
 ```
 Install packages from list and then:
@@ -70,8 +70,8 @@ The countdown time starts from the first entered character.
 ## Share your result
 Enter your nickname into the form after entering text. Your result will be sent to the server.<br/>
 (source code - https://github.com/iikrllx/typp-server)<br/>
-Through the main menu it will be possible to go to the pivot table of common results for viewing.<br/>
-The top five results (users) are immediately visible :wink:<br/>
+Through the main menu it will be possible to go to the pivot table of common results for viewing.
+The top five results (users) are immediately visible.<br/>
 ![screenshot](./images/wpm_table.png)
 
 ## Advice
