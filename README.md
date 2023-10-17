@@ -68,7 +68,7 @@ characters_count / time_in_minute
 The countdown time starts from the first entered character.
 
 ## Share your result
-Enter your nickname into the form after entering text. Your result will be sent to the server.<br/>
+Enter your nickname into the form after entering text. Your result will be sent to the TCP server.<br/>
 (source code - https://github.com/iikrllx/typp-server)<br/>
 Through the main menu it will be possible to go to the pivot table of common results for viewing.
 The top five results (users) are immediately visible.<br/>
