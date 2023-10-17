@@ -1,0 +1,38 @@
+--- Needed Packages
+
+name      |      version      |      description      |
+---------------------------------------------
+gcc                10.2              GNU C compiler
+libc               2.31              GNU C Library
+make               4.3               GNU make utility to maintain groups of programs
+autoconf           2.69              A GNU tool for automatically configuring source code
+automake           1.16              A GNU tool for automatically creating Makefiles
+binutils           2.35              A set of programs to assemble and manipulate binary and object files
+pkg-config         0.29              Package compiler and linker metadata toolkit
+libncurses5        6.2               shared libraries for terminal handling (legacy version)
+libncurses5-dev    6.2               transitional package for libncurses-dev
+libncursesw5       6.2               shared libraries for terminal handling (wide character legacy version)
+libncursesw5-dev   6.2               transitional package for libncurses-dev
+ncurses-doc        6.2               developer's guide and documentation for ncurses
+---------------------------------------------
+
+
+--- Make sure charset is set to UTF-8
+For correct display characters recommended use UTF-8 charset.
+Run the 'locale' command
+
+
+--- Spell
+autoreconf -iv && ./configure 'CFLAGS=-O0 -g3' && sudo make install
+
+
+--- Launch and show your best result
+typp
+
+
+--- File Structure
+/usr/local/bin/typp
+/usr/local/share/typp/
+/usr/local/share/typp/eng.typp
+/usr/local/share/typp/rus.typp
+/usr/local/man/man6/typp.6
