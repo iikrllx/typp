@@ -1,0 +1,41 @@
+.TH typp "6" "May 2021" "typp v1.3.33"
+.SH NAME
+typp \- practice of typing text from the keyboard.
+.SH DESCRIPTION
+.nf
+This application provides a keyboard input interface for analyzing input speed, errors, etc.
+The entered character that matches the text character is highlighted in green.
+Incorrectly entered characters are highlighted in red.
+
+From the available randomly generated texts Russian and English.
+For correct display Russian texts recommended use UTF-8 charset. $ man 1 locale
+WPM (words per minute) is used to calculate the speed of English texts.
+CPM (characters per minute) is used to calculate the speed of Russian texts.
+
+After entering the text, the results will appear, along with the rating.
+
+WPM rating:
+  slow    -  less 24
+  fine    -  more or equal 24 and less 32
+  middle  -  more or equal 32 and less 52
+  well    -  more or equal 52 and less 70
+  pro     -  more or equal 70 and less or equal 80
+  best    -  more 80
+
+CPM rating:
+  slow    -  less 120
+  fine    -  more or equal 120 and less 160
+  middle  -  more or equal 160 and less 260
+  well    -  more or equal 260 and less 350
+  pro     -  more or equal 350 and less or equal 400
+  best    -  more 400
+.SH AUTHOR
+Written by Kirill Rekhov <mgrainmi@gmail.com>
+.SH REPORTING BUGS
+Report bugs to <mgrainmi@gmail.com>
+.SH COPYRIGHT
+.nf
+Copyright (C) 2021 Kirill Rekhov <mgrainmi@gmail.com>
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, version 3.
