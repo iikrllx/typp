@@ -1,0 +1,3 @@
+TCP server. Accepts requests from TCP client (typp) and processes them.
+Luanch server (socket listening). NOT TESTED (requires improvement).
+$ bash launch.sh

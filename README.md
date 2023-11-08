@@ -5,6 +5,7 @@ From the available random texts: <strong>English</strong> / <strong>Russian</str
 
 ## Table of Contents
 - [Cloning and check needed packages](#cloning-and-check-needed-packages)
+- [TUI Launch](#tui-launch)
 - [TUI Overview](#tui-overview)
 - [Result more details](#result-more-details)
 - [Share your result](#share-your-result)
@@ -12,18 +13,23 @@ From the available random texts: <strong>English</strong> / <strong>Russian</str
 
 ## Cloning and check needed packages
 ```
-git clone https://github.com/iikrllx/typp
-cd typp && cat INSTALL
+$ git clone https://github.com/iikrllx/typp
+$ cd typp && cat INSTALL
 ```
 Install packages from list and then:
 ```
-autoreconf -iv && ./configure && sudo make install
+$ autoreconf -iv && ./configure && sudo make install
 ```
 Disable terminal shortcuts<br/>
 Terminal -> Edit -> Preferences -> Advanced<br/>
 Check the boxes:
 * Disable menu shortcut key (F10 by default)
 * Disable help window shortcut key (F1 by default)
+
+## TUI Launch
+```
+$ typp
+```
 
 ## TUI Overview
 ![gif](./images/overview.gif)
@@ -68,8 +74,9 @@ characters_count / time_in_minute
 The countdown time starts from the first entered character.
 
 ## Share your result
+Not stable working.
+Read 'src/server/README' -> requires improvement / work.<br/>
 Enter your nickname into the form after entering text. Your result will be sent to the TCP server.<br/>
-(source code - https://github.com/iikrllx/typp-server)<br/>
 Through the main menu it will be possible to go to the pivot table of common results for viewing.
 The top five results (users) are immediately visible.<br/>
 ![screenshot](./images/wpm_table.png)

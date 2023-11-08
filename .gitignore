@@ -1,5 +1,8 @@
 a.out
 typp
+typp-server
+cpm.*
+wpm.*
 *.o
 .gdb_history
 .deps/

@@ -23,11 +23,11 @@ Run the 'locale' command
 
 
 --- Spell
-autoreconf -iv && ./configure 'CFLAGS=-O0 -g3' && sudo make install
+$ autoreconf -iv && ./configure 'CFLAGS=-O0 -g3' && sudo make install
 
 
 --- Launch and show your best result
-typp
+$ typp
 
 
 --- File Structure
