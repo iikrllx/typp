@@ -1,6 +1,6 @@
 # typp
 This TUI is intended for the practice of typing text from the keyboard.<br/>
-You can compete with other users through the pivot table TCP client-server (Not stable).<br/>
+You can compete with other users through the pivot table TCP client-server (server not implemented).
 From the available random texts: <strong>English</strong> / <strong>Russian</strong>.<br/>
 
 ## Table of Contents
@@ -74,8 +74,7 @@ characters_count / time_in_minute
 The countdown time starts from the first entered character.
 
 ## Share your result
-Not stable working.<br/>
-Read 'src/server/README' -> requires improvement / work.<br/><br/>
+<strong>(a connection to the TCP server is required - not implemented).</strong><br/>
 Enter your nickname into the form after entering text. Your result will be sent to the TCP server.
 Through the main menu it will be possible to go to the pivot table of common results for viewing.
 The top five results (users) are immediately visible.<br/>
