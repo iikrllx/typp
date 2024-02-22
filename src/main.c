@@ -512,7 +512,7 @@ display_split_text(wchar_t *main_text, size_t wlent, WINDOW * text_win)
 static void
 getrnd_text(wchar_t **main_text, size_t tsize, char *fname, int offsets[])
 {
-	char fpath[30] = "/usr/local/share/typp/";
+	char fpath[31] = "/usr/local/share/typp/";
 	int j = sizeof(wchar_t), i;
 	FILE *stream;
 	wint_t c;
