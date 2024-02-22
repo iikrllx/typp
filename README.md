@@ -1,7 +1,7 @@
 # typp
-This TUI is intended for the practice of typing text from the keyboard.<br/>
+This TUI is intended for the practice of typing text from the keyboard.
 You can compete with other users through the pivot table TCP client-server (server not implemented).
-From the available random texts: <strong>English</strong> / <strong>Russian</strong>.<br/>
+From the available random texts: <strong>English</strong> / <strong>Russian</strong>.
 
 ## Table of Contents
 - [Cloning and check needed packages](#cloning-and-check-needed-packages)
@@ -20,7 +20,7 @@ Install packages from list and then:
 ```
 $ autoreconf -iv && ./configure && sudo make install
 ```
-Disable terminal shortcuts<br/>
+Disable terminal shortcuts.<br/>
 Terminal -> Edit -> Preferences -> Advanced<br/>
 Check the boxes:
 * Disable menu shortcut key (F10 by default)
@@ -34,7 +34,8 @@ $ typp
 ## TUI Overview
 ![gif](./images/overview.gif)
 
-After typed text the result will appear (below example):<br/>
+After typed text the result will appear (below example):
+
 ![screenshot](./images/result.png)
 
 ## Result more details
@@ -77,10 +78,12 @@ The countdown time starts from the first entered character.
 <strong>(a connection to the TCP server is required - not implemented).</strong><br/>
 Enter your nickname into the form after entering text. Your result will be sent to the TCP server.
 Through the main menu it will be possible to go to the pivot table of common results for viewing.
-The top five results (users) are immediately visible.<br/>
+The top five results (users) are immediately visible.
+
 ![screenshot](./images/wpm_table.png)
 
 ## Advice
 Why my rating to low?<br/>
 Use <strong>touch typing method</strong> to achieve great results!
+
 ![screenshot](./images/keyboard.png)
