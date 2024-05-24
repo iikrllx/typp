@@ -1,6 +1,6 @@
 /*
 typp - practice of typing text from the keyboard.
-Copyright (C) 2021 Kirill Rekhov <mgrainmi@gmail.com>
+Copyright (C) 2021 Kirill Rekhov <krekhov.dev@mail.ru>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -56,7 +56,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <form.h>
 #endif
 
-int connect_to_server();
 void version_header_box();
 void xfprintf(char *str, int line);
 void *xmalloc(size_t size);
@@ -108,11 +107,10 @@ extern struct tui_elements {
     return;
 
 #define program_name "typp"
-#define NAME_VERSION "Typing Practice - v1.3.33"
+#define NAME_VERSION "Typing Practice - v1.0.0"
 #define QUIT_MSG "F10 Quit"
 #define CANCEL_MSG "F3 Cancel"
 #define HELP_MSG "F1 Help"
-#define RES_MSG "F5 Results Table"
 #define ASCII_ENTER 10
 #define ASCII_SPACE 32
 #define ASCII_DEL 127

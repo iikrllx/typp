@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT(typp, v1.3.33, mgrainmi@gmail.com)
+AC_INIT(typp, v1.0.0, krekhov.dev@mail.ru)
 AC_CONFIG_SRCDIR([config.h.in])
 AC_CONFIG_HEADERS([config.h])
 
@@ -21,8 +21,7 @@ AC_CHECK_LIB([m], [round])
 
 # Checks for header files.
 AC_CHECK_HEADERS([unistd.h math.h time.h ctype.h wchar.h errno.h error.h \
-                  signal.h menu.h form.h sys/socket.h arpa/inet.h locale.h \
-                  ncurses.h stdio.h stdlib.h string.h errno.h])
+                  signal.h menu.h form.h ncurses.h locale.h stdio.h stdlib.h string.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_CHECK_HEADER_STDBOOL
