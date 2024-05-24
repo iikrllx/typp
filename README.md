@@ -1,44 +1,37 @@
 # typp
 This TUI is intended for the practice of typing text from the keyboard.
-You can compete with other users through the pivot table TCP client-server (server not implemented).
 From the available random texts: <strong>English</strong> / <strong>Russian</strong>.
 
-## Table of Contents
-- [Cloning and check needed packages](#cloning-and-check-needed-packages)
-- [TUI Launch](#tui-launch)
-- [TUI Overview](#tui-overview)
-- [Result more details](#result-more-details)
-- [Share your result](#share-your-result)
-- [Advice](#advice)
-
-## Cloning and check needed packages
+## Installation
 ```
 $ git clone https://github.com/iikrllx/typp
 $ cd typp && cat INSTALL
 ```
-Install packages from list and then:
+Install required packages from list and then:
 ```
 $ autoreconf -iv && ./configure && sudo make install
 ```
 Disable terminal shortcuts.<br/>
 Terminal -> Edit -> Preferences -> Advanced<br/>
+
 Check the boxes:
 * Disable menu shortcut key (F10 by default)
 * Disable help window shortcut key (F1 by default)
 
-## TUI Launch
+Launch:
 ```
 $ typp
 ```
 
 ## TUI Overview
+The countdown time starts from the first entered character.
 ![gif](./images/overview.gif)
 
-After typed text the result will appear (below example):
+After typed text the result will appear:
 
 ![screenshot](./images/result.png)
 
-## Result more details
+## Result
 ### WPM
 ```
 Rating Tag  |  Range
@@ -70,20 +63,3 @@ Formula:
 ```
 characters_count / time_in_minute
 ```
-
-### Time
-The countdown time starts from the first entered character.
-
-## Share your result
-<strong>(a connection to the TCP server is required - not implemented).</strong><br/>
-Enter your nickname into the form after entering text. Your result will be sent to the TCP server.
-Through the main menu it will be possible to go to the pivot table of common results for viewing.
-The top five results (users) are immediately visible.
-
-![screenshot](./images/wpm_table.png)
-
-## Advice
-Why my rating to low?<br/>
-Use <strong>touch typing method</strong> to achieve great results!
-
-![screenshot](./images/keyboard.png)

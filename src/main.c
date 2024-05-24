@@ -1,6 +1,6 @@
 /*
 typp - practice of typing text from the keyboard.
-Copyright (C) 2021 Kirill Rekhov <mgrainmi@gmail.com>
+Copyright (C) 2021 Kirill Rekhov <krekhov.dev@mail.ru>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -59,14 +59,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <signal.h>
 #endif
 
-void npm_menu();
-void send_res_to_server(int sock, int lang, char *nickname,
-			double npm, int err, int min, int sec);
-
 struct tui_elements tuiv;
-static char *langs[2] = { "Russian", "English" };
-
-static int lang_highlight = 0, newlcount;
+static char *langs[2] = {"Russian", "English"};
+static int lang_highlight = 0;
+static int newlcount;
 
 static void rating_info()
 {
@@ -76,22 +72,16 @@ static void rating_info()
 	mvwaddstr(tuiv.rating_win, 1, 1, "WPM rating:");
 	mvwaddstr(tuiv.rating_win, 2, 2, "(slow) less 24");
 	mvwaddstr(tuiv.rating_win, 3, 2, "(fine) more or equal 24 and less 32");
-	mvwaddstr(tuiv.rating_win, 4, 2,
-		  "(middle) more or equal 32 and less 52");
+	mvwaddstr(tuiv.rating_win, 4, 2, "(middle) more or equal 32 and less 52");
 	mvwaddstr(tuiv.rating_win, 5, 2, "(well) more or equal 52 and less 70");
-	mvwaddstr(tuiv.rating_win, 6, 2,
-		  "(pro) more or equal 70 and less or equal 80");
+	mvwaddstr(tuiv.rating_win, 6, 2, "(pro) more or equal 70 and less or equal 80");
 	mvwaddstr(tuiv.rating_win, 7, 2, "(best) more 80");
 	mvwaddstr(tuiv.rating_win, 10, 1, "CPM rating:");
 	mvwaddstr(tuiv.rating_win, 11, 2, "(slow) less 120");
-	mvwaddstr(tuiv.rating_win, 12, 2,
-		  "(fine) more or equal 120 and less 160");
-	mvwaddstr(tuiv.rating_win, 13, 2,
-		  "(middle) more or equal 160 and less 260");
-	mvwaddstr(tuiv.rating_win, 14, 2,
-		  "(well) more or equal 260 and less 350");
-	mvwaddstr(tuiv.rating_win, 15, 2,
-		  "(pro) more or equal 350 and less or equal 400");
+	mvwaddstr(tuiv.rating_win, 12, 2, "(fine) more or equal 120 and less 160");
+	mvwaddstr(tuiv.rating_win, 13, 2, "(middle) more or equal 160 and less 260");
+	mvwaddstr(tuiv.rating_win, 14, 2, "(well) more or equal 260 and less 350");
+	mvwaddstr(tuiv.rating_win, 15, 2, "(pro) more or equal 350 and less or equal 400");
 	mvwaddstr(tuiv.rating_win, 16, 2, "(best) more 400");
 	FOOTER_MSGS;
 	wrefresh(tuiv.rating_win);
@@ -113,10 +103,11 @@ static void help_info()
 	mvwaddstr(tuiv.help_win, 1, 1,
 		  "This free software, and you are welcome to redistribute in under terms of");
 	mvwaddstr(tuiv.help_win, 2, 1,
-		  "MIT License. This software is intended for the practice of typing text from");
-	mvwaddstr(tuiv.help_win, 3, 1, "the keyboard.");
+		  "GPL License. This software is intended for the practice of typing text from");
+	mvwaddstr(tuiv.help_win, 3, 1,
+		  "the keyboard.");
 	mvwaddstr(tuiv.help_win, 5, 1,
-		  "From the available texts English and Russian.");
+		  "From the available texts: English and Russian.");
 	mvwaddstr(tuiv.help_win, 6, 1,
 		  "For correct display Russian characters recommended use UTF-8 charset.");
 	mvwaddstr(tuiv.help_win, 7, 1,
@@ -133,23 +124,19 @@ static void help_info()
 		  "After full entering the text, the results will appear, along with the rating.");
 	mvwaddstr(tuiv.help_win, 15, 1,
 		  "To see the description of ratings, press");
+
 	wattron(tuiv.help_win, COLOR_PAIR(5) | A_UNDERLINE);
 	mvwaddstr(tuiv.help_win, 15, 42, "Enter");
 	wattroff(tuiv.help_win, COLOR_PAIR(5) | A_UNDERLINE);
-	mvwaddstr(tuiv.help_win, 16, 1,
-		  "You can share your result after full entering text to compete (client-server).");
-	mvwaddstr(tuiv.help_win, 17, 1,
-		  "Press 'F5' in the main menu to see shared results in pivot table.");
+
 	mvwaddstr(tuiv.help_win, 19, 1, NAME_VERSION);
-	mvwaddstr(tuiv.help_win, 20, 1,
-		  "Typing Practice written by Kirill Rekhov <mgrainmi@gmail.com>");
+	mvwaddstr(tuiv.help_win, 20, 1, "Typing Practice written by Kirill Rekhov <krekhov.dev@mail.ru>");
 	FOOTER_MSGS;
 	wrefresh(tuiv.help_win);
 
 	while (true) {
 		switch (getch()) {
 			case_EXIT;
-
 			case_CLEAR_CANCEL;
 
 		case ASCII_ENTER:
@@ -158,107 +145,6 @@ static void help_info()
 			return;
 		}
 	}
-}
-
-static char *trim_whitespaces(char *str)
-{
-	char *end;
-
-	/* trim leading space */
-	while (isspace(*str))
-		str++;
-
-	/* all spaces? */
-	if (*str == 0)
-		return str;
-
-	/* trim trailing space */
-	end = str + strnlen(str, NICKNAME_LEN) - 1;
-
-	while (end > str && isspace(*end))
-		end--;
-
-	/* write new null terminator */
-	*(end + 1) = '\0';
-
-	return str;
-}
-
-static void get_user_nickname(char **nickname)
-{
-	int ch;
-
-	/* initialize the fields */
-	tuiv.field[0] =
-	    new_field(1, NICKNAME_LEN - 1, 10, (COLS - (NICKNAME_LEN - 1)) / 2,
-		      0, 0);
-	tuiv.field[1] = NULL;
-
-	/* set field options */
-	set_field_back(tuiv.field[0], A_UNDERLINE);	/* print a line for the option   */
-	field_opts_off(tuiv.field[0], O_AUTOSKIP);	/* don't go to next field when this */
-
-	/* create the form and post it */
-	curs_set(1);
-	tuiv.form = new_form(tuiv.field);
-	post_form(tuiv.form);
-	refresh();
-
-	attron(COLOR_BOLD(1));
-	tuiv.nick_msg =
-	    "Write your nickname, use alphabetic characters and press Enter.";
-	mvprintw(7, (COLS - strlen(tuiv.nick_msg)) / 2, tuiv.nick_msg);
-	tuiv.nick_msg =
-	    "After submitting your result will be in the 'Results Table'.";
-	mvprintw(8, (COLS - strlen(tuiv.nick_msg)) / 2, tuiv.nick_msg);
-	attroff(COLOR_BOLD(1));
-	FOOTER_MSGS;
-	pos_form_cursor(tuiv.form);
-
-	while ((ch = getch())) {
-		switch (ch) {
-		case KEY_BACKSPACE:
-		case ASCII_DEL:
-			form_driver(tuiv.form, REQ_DEL_PREV);
-			continue;
-
-		case ASCII_ENTER:
-			curs_set(0);
-			form_driver(tuiv.form, REQ_NEXT_FIELD);
-			form_driver(tuiv.form, REQ_PREV_FIELD);
-			strcpy(*nickname,
-			       trim_whitespaces(field_buffer
-						(tuiv.field[0], 0)));
-
-			if (*nickname[0] == '\0' || isdigit(*nickname[0])) {
-				curs_set(1);
-				mvprintw(0, 0, "Please, input your nickname.");
-				pos_form_cursor(tuiv.form);
-				continue;
-			}
-
-			break;
-
-			case_EXIT;
-
-		case KEY_F(3):
-			free(*nickname);
-			*nickname = NULL;
-			break;
-
-		default:
-			if (isalpha(ch))
-				form_driver(tuiv.form, ch);
-			continue;
-		}
-
-		break;
-	}
-
-	/* free form, field memory */
-	unpost_form(tuiv.form);
-	free_form(tuiv.form);
-	free_field(tuiv.field[0]);
 }
 
 static char *get_wpm_rating(int wpm)
@@ -299,9 +185,9 @@ static void
 display_input_result(int errcount, int scount, int sscount,
 		     int wcount, double sec_diff)
 {
-	int min, sec, client_sock;
-	char *rating, *nickname;
+	int min, sec;
 	double time_in_min, npm;
+	char *rating;
 
 	/* convert */
 	time_in_min = sec_diff / 60.0f;
@@ -346,61 +232,30 @@ display_input_result(int errcount, int scount, int sscount,
 	mvwprintw(tuiv.result_win, 13, 2, "Words: %22d", wcount);
 	mvwprintw(tuiv.result_win, 14, 2, "Text lines: %17d", newlcount);
 	mvwprintw(tuiv.result_win, 15, 2, "Total characters: %11d", scount);
-	mvwprintw(tuiv.result_win, 16, 2, "Characters less spaces: %5d",
-		  sscount);
-	attron(A_UNDERLINE | A_STANDOUT | COLOR_PAIR(6));
-	mvprintw(19, 3, "Press Enter to share result");
-	attroff(A_UNDERLINE | A_STANDOUT | COLOR_PAIR(6));
+	mvwprintw(tuiv.result_win, 16, 2, "Characters less spaces: %5d", sscount);
 	FOOTER_MSGS;
 	wrefresh(tuiv.result_win);
 
 	while (true) {
 		switch (getch()) {
 			case_EXIT;
-
 			case_CANCEL;
-
-		case ASCII_ENTER:
-			nickname = xmalloc(NICKNAME_LEN * sizeof(char));
-			get_user_nickname(&nickname);
-
-			if (nickname != NULL) {
-				if ((client_sock = connect_to_server()) == -1) {
-					close(client_sock);
-					clear();
-					return;
-				}
-
-				send_res_to_server(client_sock, lang_highlight,
-						   nickname, npm, errcount, min,
-						   sec);
-				mvprintw(0, 0, "%s - data sent successfully.",
-					 nickname);
-				mvprintw(1, 0,
-					 "Your result will be displayed in the 'Results Table' along with your nickname.");
-				mvprintw(2, 0, "Press any key...");
-
-				free(nickname);
-				getch();
-			}
-
-			return;
 		}
 	}
 }
 
 static void input_text(wchar_t *main_text, size_t wlent, WINDOW * text_win)
 {
-	wchar_t error_char[2];	/* in case of discrepancy */
-	wint_t cuser;		/* user input character */
-	bool err_bool = false;	/* boolean for error counting */
-	time_t start_t, end_t;	/* need for user input time */
+	wchar_t error_char[2]; /* in case of discrepancy */
+	wint_t cuser;          /* user input character */
+	bool err_bool = false; /* boolean for error counting */
+	time_t start_t, end_t; /* need for user input time */
 
 	double sec_diff;
 	int scount, xcount = 1, ycount = 1;
 	int errcount = 0, sscount = 0, wcount = 0, wc = 0;
 
-	curs_set(1);		/* set cursor normal station */
+	curs_set(1); /* set cursor normal station */
 
 	/* if the user enters Russian characters, they will be displayed incorrectly
 	   for this is used wide characters. so that there is a correct comparison,
@@ -414,19 +269,17 @@ static void input_text(wchar_t *main_text, size_t wlent, WINDOW * text_win)
 
 		switch (cuser) {
 			case_EXIT;
-
 			case_CANCEL;
 
 		default:
 			if (main_text[wc] == cuser) {
 				xcount++;
 				if (cuser == ASCII_ENTER) {
-					xcount = 1;	/* back to first character of line */
-					ycount++;	/* go to the next line */
+					xcount = 1; /* back to first character of line */
+					ycount++; /* go to the next line */
 				} else {
 					wattron(text_win, COLOR_BOLD(3));
-					mvwaddnwstr(text_win, ycount, xcount,
-						    (wchar_t *)&cuser, 1);
+					mvwaddnwstr(text_win, ycount, xcount, (wchar_t *)&cuser, 1);
 					wattroff(text_win, COLOR_BOLD(3));
 				}
 
@@ -449,8 +302,7 @@ static void input_text(wchar_t *main_text, size_t wlent, WINDOW * text_win)
 
 				swprintf(error_char, 2, L"%lc", main_text[wc]);
 				wattron(text_win, COLOR_BOLD(4));
-				mvwaddnwstr(text_win, ycount, xcount + 1,
-					    error_char, 1);
+				mvwaddnwstr(text_win, ycount, xcount + 1, error_char, 1);
 				wattroff(text_win, COLOR_BOLD(4));
 			}
 		}
@@ -482,7 +334,7 @@ static void input_text(wchar_t *main_text, size_t wlent, WINDOW * text_win)
 		}
 	}
 
-	sec_diff = difftime(end_t, start_t);	/* return double number (diff seconds) */
+	sec_diff = difftime(end_t, start_t); /* return double number (diff seconds) */
 	display_input_result(errcount, scount, sscount, wcount, sec_diff);
 }
 
@@ -513,9 +365,10 @@ static void
 getrnd_text(wchar_t **main_text, size_t tsize, char *fname, int offsets[])
 {
 	char fpath[31] = "/usr/local/share/typp/";
-	int j = sizeof(wchar_t), i;
+	int j = sizeof(wchar_t);
 	FILE *stream;
 	wint_t c;
+	int i;
 
 	strcat(fpath, fname);
 	if ((stream = fopen(fpath, "r")) == NULL) {
@@ -540,7 +393,6 @@ getrnd_text(wchar_t **main_text, size_t tsize, char *fname, int offsets[])
 	}
 
 	(*main_text)[i] = '\0';
-
 	fclose(stream);
 }
 
@@ -575,8 +427,7 @@ static void lets_start_type()
 	keypad(tuiv.text_win, TRUE);
 
 	attron(COLOR_BOLD(1));
-	mvprintw((LINES - 24) / 2, (COLS - strlen(tuiv.note_msg)) / 2,
-		 "%s", tuiv.note_msg);
+	mvprintw((LINES - 24) / 2, (COLS - strlen(tuiv.note_msg)) / 2, "%s", tuiv.note_msg);
 	attroff(COLOR_BOLD(1));
 	FOOTER_MSGS;
 
@@ -593,8 +444,7 @@ static void lets_start_type()
 static void resize_term_handler()
 {
 	endwin();
-	printf("%s: The terminal size has changed, \
-please re-enter the program\n", program_name);
+	printf("%s: The terminal size has changed, please re-enter the program\n", program_name);
 	exit(EXIT_SUCCESS);
 }
 
@@ -603,14 +453,12 @@ int main(void)
 	setlocale(LC_ALL, "");
 
 	if (signal(SIGWINCH, resize_term_handler) == SIG_ERR)
-		xfprintf("It is impossible to process the signal SIGWINCH",
-			 __LINE__);
+		xfprintf("It is impossible to process the signal SIGWINCH", __LINE__);
 
 	/* ignore SIGINT signal (CTRL + C)
 	   the program has a way out key 'F10 Quit' */
 	if (signal(SIGINT, SIG_IGN) == SIG_ERR)
-		xfprintf("It is impossible to process the signal SIGINT",
-			 __LINE__);
+		xfprintf("It is impossible to process the signal SIGINT", __LINE__);
 
 	if (!initscr()) {
 		error(0, 0, "Error initialising ncurses");
@@ -625,8 +473,7 @@ int main(void)
 		/* check 80 columns by 24 rows terminal size */
 		if (LINES < 24 || COLS < 80) {
 			endwin();
-			xfprintf("Please, use terminal size not less 80x24",
-				 __LINE__);
+			xfprintf("Please, use terminal size not less 80x24", __LINE__);
 		}
 
 		if (has_colors()) {
@@ -643,16 +490,12 @@ int main(void)
 		version_header_box();
 		tuiv.sel_lang_title = "Please, select language for text:";
 		attron(COLOR_BOLD(7));
-		mvprintw(7, (COLS - strlen(tuiv.sel_lang_title)) / 2,
-			 "%s", tuiv.sel_lang_title);
+		mvprintw(7, (COLS - strlen(tuiv.sel_lang_title)) / 2, "%s", tuiv.sel_lang_title);
 		attroff(COLOR_BOLD(7));
 
 		attron(COLOR_PAIR(5));
 		mvprintw(LINES - 2, 4, "%s", HELP_MSG);
-		mvprintw(LINES - 2, (COLS - strlen(RES_MSG)) / 2, "%s",
-			 RES_MSG);
-		mvprintw(LINES - 2, (COLS - strlen(QUIT_MSG)) - 4, "%s",
-			 QUIT_MSG);
+		mvprintw(LINES - 2, (COLS - strlen(QUIT_MSG)) - 4, "%s", QUIT_MSG);
 		attroff(COLOR_PAIR(5));
 
 		menu_of_two_elements(langs, lang_highlight);
@@ -675,12 +518,7 @@ int main(void)
 			help_info();
 			break;
 
-		case KEY_F(5):
-			clear();
-			npm_menu();
-			continue;
-
-			case_EXIT;
+		case_EXIT;
 
 		case ASCII_ENTER:
 			clear();

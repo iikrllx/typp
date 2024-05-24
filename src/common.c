@@ -1,6 +1,6 @@
 /*
 typp - practice of typing text from the keyboard.
-Copyright (C) 2021 Kirill Rekhov <mgrainmi@gmail.com>
+Copyright (C) 2021 Kirill Rekhov <krekhov.dev@mail.ru>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 /*
- * common.c - these functions useful for another modules in this project.
+ * common.c - these functions need for another modules in this project.
  *
 */
 
@@ -56,8 +56,7 @@ void version_header_box()
 	BOX_WBORDER_ZERO(tuiv.main_title_win);
 
 	wattron(tuiv.main_title_win, COLOR_BOLD(1));
-	mvwprintw(tuiv.main_title_win, 1, (COLS - strlen(tuiv.main_title)) / 2,
-		  "%s", tuiv.main_title);
+	mvwprintw(tuiv.main_title_win, 1, (COLS - strlen(tuiv.main_title)) / 2, "%s", tuiv.main_title);
 	wattroff(tuiv.main_title_win, COLOR_BOLD(1));
 	wrefresh(tuiv.main_title_win);
 }
@@ -67,8 +66,7 @@ void menu_of_two_elements(char *elements[], int highlight)
 	for (int i = 0; i < 2; i++) {
 		if (i == highlight)
 			attron(A_UNDERLINE | A_STANDOUT | COLOR_BOLD(6));
-		mvprintw(i + 9, (COLS - strlen(elements[i]) - 4) / 2, "  %s  ",
-			 elements[i]);
+		mvprintw(i + 9, (COLS - strlen(elements[i]) - 4) / 2, "  %s  ", elements[i]);
 		attroff(A_UNDERLINE | A_STANDOUT | COLOR_BOLD(6));
 	}
 }
