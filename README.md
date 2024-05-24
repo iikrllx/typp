@@ -1,6 +1,22 @@
+<div>
+<a href="https://github.com/iikrllx/typp/blob/master/CONTRIBUTING.md">
+    <img src="https://img.shields.io/badge/Welcome-gray?label=Contributions&labelColor=blue">
+</a>
+<img src="https://img.shields.io/badge/v1.0.0-green?label=version&labelColor=red"
+</div>
+
 # typp
-This TUI is intended for the practice of typing text from the keyboard.
+I made it for fun. This <strong>TUI</strong> is intended for the practice of typing text from the keyboard.
 From the available random texts: <strong>English</strong> / <strong>Russian</strong>.
+
+## TUI Overview
+The countdown time starts from the first entered character.
+
+![gif](./images/overview.gif)
+
+After typed text the result will appear:
+
+![screenshot](./images/result.png)
 
 ## Installation
 ```
@@ -22,14 +38,6 @@ Launch:
 ```
 $ typp
 ```
-
-## TUI Overview
-The countdown time starts from the first entered character.
-![gif](./images/overview.gif)
-
-After typed text the result will appear:
-
-![screenshot](./images/result.png)
 
 ## Result
 ### WPM
