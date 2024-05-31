@@ -2,7 +2,9 @@
 <a href="https://github.com/iikrllx/typp/blob/master/CONTRIBUTING.md">
     <img src="https://img.shields.io/badge/Welcome-gray?label=Contributions&labelColor=blue">
 </a>
-<img src="https://img.shields.io/badge/v1.0.0-green?label=version&labelColor=red"
+<a href="https://github.com/iikrllx/typp/blob/master/ChangeLog">
+    <img src="https://img.shields.io/badge/v1.0.0-green?label=version&labelColor=red">
+</a>
 </div>
 
 # typp
